@@ -28,15 +28,45 @@ app.post("/todos", async(req,res) => {
 })
 
 // update todo entry
+app.put("/todos/:id", async(req,res) =>{
+    try {
+        // id is required
+        const { id } = req.params;
+        const { description } = req.body;
+
+        const updateTodoItem = await pool.query(
+            "UPDATE todo SET description = $1 WHERE todo_id = $2", 
+            [description, id]
+        );
+
+        res.json("Update was successfull.");
+    } catch (error) {
+        console.log(error.message)
+    }
+})
 
 
 // delete todo entry
+app.delete("/todos/:id", async(req,res) =>{
+    try {
+        // id is required
+        const { id } = req.params;
+    
+        const deleteTodoItem = await pool.query(
+            "DELETE FROM todo WHERE todo_id = $1", 
+            [id]
+        );
 
+        res.json("Delete was successfull.");
+    } catch (error) {
+        console.log(error.message)
+    }
+})
 
 // get all todo entry GET http://localhost:5000/todos
 app.get("/todos", async(req,res) =>{
     try {
-        const allTodos = await pool.query("SELECT * FROM todo");
+        const allTodos = await pool.query("SELECT * FROM todo ORDER BY todo_id");
 
         res.json(allTodos.rows);
     } catch (error) {
@@ -47,7 +77,6 @@ app.get("/todos", async(req,res) =>{
 // get a todo entry
 app.get("/todos/:id", async(req,res) =>{
     try {
-        // url params should be seen as req.params
         const { id } = req.params;
 
         const todoItem = await pool.query(
