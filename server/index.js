@@ -5,6 +5,8 @@ const express = require("express");
 const app = express();
 const cors = require("cors");
 const pool = require("./db")
+
+
 // Middleware handler
 app.use(cors());
 app.use(express.json()); // able to get json data from incoming request object
@@ -27,7 +29,7 @@ app.post("/todos", async(req,res) => {
     }
 })
 
-// update todo entry
+// update todo entry PUT http://localhost:5000/todos/1
 app.put("/todos/:id", async(req,res) =>{
     try {
         // id is required
@@ -46,7 +48,7 @@ app.put("/todos/:id", async(req,res) =>{
 })
 
 
-// delete todo entry
+// delete todo entry: DELETE http://localhost:5000/todos/1
 app.delete("/todos/:id", async(req,res) =>{
     try {
         // id is required
@@ -74,7 +76,7 @@ app.get("/todos", async(req,res) =>{
     }
 })
 
-// get a todo entry
+// get a todo entry GET http://localhost:5000/todos/1
 app.get("/todos/:id", async(req,res) =>{
     try {
         const { id } = req.params;
