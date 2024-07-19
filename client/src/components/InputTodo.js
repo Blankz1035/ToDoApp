@@ -7,6 +7,11 @@ const InputTodo = () => {
         e.preventDefault();
         try {
             const body = { description };
+
+            if (description.length <5){
+                alert("Enter a description for your todo.")
+                return
+            }
             const response = await fetch("http://localhost:5000/todos", {
                 method: "POST",
                 headers: {"Content-Type": "application/json"},
@@ -27,7 +32,8 @@ const InputTodo = () => {
                 <input 
                 type="text" 
                 class="form-control" 
-                id="ToDoDescription" 
+                id="ToDoDescription"
+                minlength= "5" 
                 placeholder="Describe your todo..." 
                 value={description}
                 onChange={e => setDescription(e.target.value)}

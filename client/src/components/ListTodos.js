@@ -19,6 +19,8 @@ const ListTodos = () => {
     //     }
     // }
 
+    //------------------------- get all todo
+
     const getAllTodos = async () => {
       try {
         const response = await fetch("http://localhost:5000/todos")
@@ -29,6 +31,22 @@ const ListTodos = () => {
         console.log(error.message)
       }
     }
+
+    //------------------------- delete todo
+    const deleteTodo = async (id) => {
+        try {
+
+            const tid =  id;
+            const response = await fetch(`http://localhost:5000/todos/${tid}`, {
+                method: "DELETE",
+            })
+            // window.location = "/"; Can do this, but this will refetch data each time. Can avoid this using state.
+            setTodos(todos.filter(todo => todo.todo_id !== id))
+        } catch (error) {
+            console.log(error.message);
+        }
+    }
+
 
     // get data from postgres onload once
     useEffect(() => {
@@ -42,7 +60,6 @@ const ListTodos = () => {
         <table class="table mt-4 text-center">
         <thead>
           <tr>
-            <th scope="col">#</th>
             <th scope="col">Description</th>
             <th scope="col">Edit</th>
             <th scope="col">Delete</th>
@@ -50,11 +67,10 @@ const ListTodos = () => {
         </thead>
         <tbody>
           {todos.map(todo => {
-            return ( <tr>
-              <th scope="row">{todo.todo_id}</th>
+            return ( <tr key={todo.todo_id}>
               <td>{todo.description}</td>
               <td>e</td>
-              <td>d</td>
+              <td><button className='btn btn-danger' onClick={() => deleteTodo(todo.todo_id)}>Delete</button></td>
             </tr>
             )
           })}
