@@ -7,22 +7,23 @@ const InputTodo = () => {
         e.preventDefault();
         try {
             const body = { description };
-            const response = fetch("http://localhost:5000/todos", {
+            const response = await fetch("http://localhost:5000/todos", {
                 method: "POST",
                 headers: {"Content-Type": "application/json"},
                 body: JSON.stringify(body)
             })
             console.log(response)
+            window.location = "/";
         } catch (error) {
             console.log(error.message);
         }
     }
   return (
     <Fragment>
-        <h1 className='text-center mt-5 pb-5'>Input Todo</h1>
+        <h1 className='text-center mt-5 pb-5'>PERN Input Todo</h1>
         <form>
             <div class="mb-3">
-                <label for="ToDoDescription" class="form-label">Info</label>
+                <label for="ToDoDescription" class="form-label">Todo Details</label>
                 <input 
                 type="text" 
                 class="form-control" 
