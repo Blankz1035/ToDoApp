@@ -34,7 +34,15 @@ app.post("/todos", async(req,res) => {
 
 
 // get todo entry
+app.get("/todos", async(req,res) =>{
+    try {
+        const allTodos = await pool.query("SELECT * FROM todo");
 
+        res.json(allTodos.rows);
+    } catch (error) {
+        console.log(error)
+    }
+})
 // endRoutes
 
 app.listen(5000, () => {
