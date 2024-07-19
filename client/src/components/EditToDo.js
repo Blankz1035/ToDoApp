@@ -40,7 +40,7 @@ const EditToDo = ({ todo }) => {
             </div>
             <div class="modal-footer">
               <button type="button" class="btn btn-primary" onClick={updateTodo}>Edit</button>
-              <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
+              <button type="button" class="btn btn-danger" data-bs-dismiss="modal" onClick={() => setDescription(todo.description)}>Close</button>
             </div>
           </div>
         </div>
